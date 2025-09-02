@@ -1,0 +1,14 @@
+    location /lightning/ {
+        access_log /etc/nginx/logs/lightning-access.log rpc-proxy;
+        error_log /etc/nginx/logs/lightning-error.log error;
+
+        set $proxy_host "lightning-service.onekey-v5-test.svc.cluster.local";
+        proxy_pass http://lightning-service.onekey-v5-test.svc.cluster.local/;
+
+        proxy_set_header Host lightning-service.onekey-v5-test.svc.cluster.local;
+        proxy_set_header accept-encoding "identity";
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_ssl_server_name on;
+        proxy_redirect off;
+    }

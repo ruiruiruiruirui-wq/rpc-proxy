@@ -1,0 +1,29 @@
+    location /ton/ {
+        access_log /etc/nginx/logs/ton-access.log rpc-proxy;
+        error_log /etc/nginx/logs/ton-error.log error;
+
+        proxy_pass https://tonhttpapi.mytonwallet.org/api/v2/jsonRPC;
+
+        proxy_set_header Host tonhttpapi.mytonwallet.org;
+        proxy_set_header accept-encoding "identity";
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_ssl_server_name on;
+        proxy_redirect off;
+    }
+
+    location /tonapi/ {
+        access_log /etc/nginx/logs/tonapi-access.log rpc-proxy;
+        error_log /etc/nginx/logs/tonapi-error.log error;
+
+        set $proxy_host "tonapi.io";
+        proxy_pass https://tonapi.io/;
+
+        proxy_set_header Host tonapi.io;
+        proxy_set_header accept-encoding "identity";
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_ssl_server_name on;
+        proxy_redirect off;
+    }
+
